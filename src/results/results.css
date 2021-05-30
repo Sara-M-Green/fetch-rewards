@@ -7,7 +7,7 @@ ul {
 }
 
 
-button {
+.show {
     background-color: #7d98a1;
     border: none;
     color: white;
@@ -21,7 +21,7 @@ button {
     border-radius: 50px;
 }
 
-button:hover {
+.show:hover {
     background-color: #566E76;
 }
 
