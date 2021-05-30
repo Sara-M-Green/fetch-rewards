@@ -1,4 +1,5 @@
 import React from 'react'
+import Item from '../item/item'
 import './results.css'
 
 class Results extends React.Component {
@@ -29,6 +30,17 @@ class Results extends React.Component {
 
     render() {
         const { error, items } = this.state
+        const itemList = items.map((item, i) => {
+            return (
+                <Item
+                    
+                    key={i}
+                    name={item.name}
+                    id={item.id}
+                    listId={item.listId}
+                />
+            ) 
+        })
 
         if (error) {
             return <div>Error: {error.message}</div>;
@@ -36,19 +48,29 @@ class Results extends React.Component {
 
         else {
             return (
-                <section>
-                    <button onClick={this.handleClick}>Get Items</button>
-                    <ul>
-                    {items.map(item => (
-                        <li key={item.id}>
-                        <div>Item Id: {item.id}</div>
-                        <div>List Id: {item.listId}</div>
-                        <div>Name: {item.name}</div>
-                        </li>
-                    ))}
-                    </ul>
-                </section>
+                <div>
+                     <button onClick={this.handleClick}>Get Items</button>
+                     <ul>
+                        {itemList}
+                     </ul>
+                    
+                </div>
             )
+            
+            // return (
+            //     <section>
+            //        
+            //         <ul>
+            //         {items.map(item => (
+            //             <li key={item.id}>
+            //             <div>Item Id: {item.id}</div>
+            //             <div>List Id: {item.listId}</div>
+            //             <div>Name: {item.name}</div>
+            //             </li>
+            //         ))}
+            //         </ul>
+            //     </section>
+            // )
 
         }
          
