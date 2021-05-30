@@ -3,11 +3,12 @@ ul {
     width: 50%;
     margin: auto;
     list-style: none;
+    display: block;
 }
 
 
 button {
-    background-color: mediumaquamarine;
+    background-color: #7d98a1;
     border: none;
     color: white;
     padding: 15px 32px;
@@ -16,9 +17,19 @@ button {
     display: inline-block;
     font-size: 16px;
     margin-top: 25px;
+    width: 150px;
+    border-radius: 50px;
 }
 
 button:hover {
-    background-color: rgb(82, 163, 136);
+    background-color: #566E76;
 }
 
+.hidden {
+    display: none;
+}
+
+.list-container {
+    display: flex;
+    flex-direction: row;
+}

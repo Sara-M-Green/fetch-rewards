@@ -1,5 +1,5 @@
 import React from 'react'
-import Item from '../item/item'
+import List from '../list/list'
 import './results.css'
 
 class Results extends React.Component {
@@ -7,7 +7,8 @@ class Results extends React.Component {
         super(props)
         this.state = {
             items: [],
-            error: null
+            error: null,
+            listIds: []
         }
     }
 
@@ -15,7 +16,7 @@ class Results extends React.Component {
         fetch('https://fetch-hiring.s3.amazonaws.com/hiring.json')
             .then(res => res.json())
             .then(
-                (result) => {
+                (result) => { 
                 this.setState({
                     items: result
                 });
@@ -26,6 +27,10 @@ class Results extends React.Component {
                 });
                 }
             )
+    }
+
+    handleBack = () => {
+        window.location.reload()
     }
 
     fiterOutNullNames = (item) => {
@@ -40,40 +45,45 @@ class Results extends React.Component {
     render() {
         const { error, items } = this.state
 
-            const itemList = items.filter(this.fiterOutNullNames)
+        // filter out null names
+        const filteredList = items.filter(this.fiterOutNullNames)
 
-            const sortedList = [].concat(itemList)
-            .sort(function(a,b){
-                return a.listId - b.listId || a.name.slice(5) - b.name.slice(5);
-            })
-            .map((item, i) => {
-                return (
-                    <Item
-                    key={i}
-                    listId={item.listId}
-                    name={item.name}
-                    id={item.id}
-                    
-                />
-                )
-                
-            })
+        // sort by listId and name
+        const sortedList = filteredList
+                .sort(function(a,b){
+                    return a.listId - b.listId || a.name.slice(5) - b.name.slice(5);
+                })
 
-        if (error) {
-            return <div>Error: {error.message}</div>;
-        }
+        // group list by listId
 
-        else {
+        sortedList.forEach(item => {
+            if(this.state.listIds.indexOf(item.listId) === -1) {
+                this.state.listIds.push(item.listId)
+            }
+        })
+
+        let lists = this.state.listIds.map((id, i) => {
             return (
-                <div>
-                     <button onClick={this.handleClick}>Get Items</button>
-                     <ul>
-                        {sortedList}
-                     </ul>
-                </div>
+                <List
+                    key={i}
+                    id={id}
+                    items={sortedList.filter(item => item.listId === id)} 
+                />
             )
-        }
-         
+        })
+
+
+        return (
+            <div>
+                <button className={(items.length === 0 ? 'show'  : 'hidden' )} onClick={this.handleClick}>Get Items</button>                  
+                <button className={(items.length === 0 ?  'hidden' : 'show' )} onClick={this.handleBack}>Back</button>
+                <div className="list-container">
+                
+                    {lists}    
+                </div>
+                
+            </div>
+        )
     }
 }
 

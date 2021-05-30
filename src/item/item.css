@@ -1,5 +1,16 @@
 li {
     list-style: none;
-    margin-bottom: 10px;
-    border: 1px solid mediumaquamarine;
+    margin: 10px auto;
+    border: 1px solid #a9b4c2;
+    max-width: 300px;
+    color: white;
+}
+
+.even {
+    
+    background-color: #6f6296	;
+}
+
+.odd {
+    background-color: #5b3372;
 }
