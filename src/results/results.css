@@ -2,12 +2,9 @@ ul {
     padding: 10px;
     width: 50%;
     margin: auto;
-}
-li {
     list-style: none;
-    margin-bottom: 10px;
-    border: 1px solid mediumaquamarine;
 }
+
 
 button {
     background-color: mediumaquamarine;

@@ -28,19 +28,36 @@ class Results extends React.Component {
             )
     }
 
+    fiterOutNullNames = (item) => {
+        if (item.name) {
+            return true
+        }
+        else {
+            return false
+        }
+    }
+
     render() {
         const { error, items } = this.state
-        const itemList = items.map((item, i) => {
-            return (
-                <Item
-                    
+
+            const itemList = items.filter(this.fiterOutNullNames)
+
+            const sortedList = [].concat(itemList)
+            .sort(function(a,b){
+                return a.listId - b.listId || a.name.slice(5) - b.name.slice(5);
+            })
+            .map((item, i) => {
+                return (
+                    <Item
                     key={i}
+                    listId={item.listId}
                     name={item.name}
                     id={item.id}
-                    listId={item.listId}
+                    
                 />
-            ) 
-        })
+                )
+                
+            })
 
         if (error) {
             return <div>Error: {error.message}</div>;
@@ -51,27 +68,10 @@ class Results extends React.Component {
                 <div>
                      <button onClick={this.handleClick}>Get Items</button>
                      <ul>
-                        {itemList}
+                        {sortedList}
                      </ul>
-                    
                 </div>
             )
-            
-            // return (
-            //     <section>
-            //        
-            //         <ul>
-            //         {items.map(item => (
-            //             <li key={item.id}>
-            //             <div>Item Id: {item.id}</div>
-            //             <div>List Id: {item.listId}</div>
-            //             <div>Name: {item.name}</div>
-            //             </li>
-            //         ))}
-            //         </ul>
-            //     </section>
-            // )
-
         }
          
     }
